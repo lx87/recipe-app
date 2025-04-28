@@ -1,19 +1,39 @@
 import { useEffect, useState } from 'react';
 import { getAllCategories } from '../ts/queryManager';
+import ItemsList from '../components/ItemsList';
+
+interface Category {
+    idCategory: string;
+    strCategory: string;
+    strCategoryThumb: string;
+    strCategoryDescription: string;
+}
 
 function Home() {
-    const [catalog, setcatalog] = useState([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+
     useEffect(() => {
         getAllCategories().then((data) => {
-            setcatalog(data?.categories)
-        })
-    })
+            setCategories(data?.categories || []);
+        });
+    }, []);
+
+    // Преобразуем категории в формат, ожидаемый ItemsList
+    const items = categories.map(category => ({
+        id: category.idCategory,
+        title: category.strCategory,
+        image: category.strCategoryThumb,
+        description: category.strCategoryDescription
+    }));
 
     return (
         <div className="p-0 container-fluid d-flex flex-column align-items-center py-5">
-            <h1>Home</h1>
+            <ItemsList
+                items={items}
+                linkPath="/category"
+            />
         </div>
     );
 }
 
-export default Home
+export default Home;

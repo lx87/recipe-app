@@ -39,3 +39,10 @@ a:hover {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.list{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto;
+  gap: 2rem;
+}
