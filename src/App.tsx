@@ -4,8 +4,8 @@ import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 
 import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
+import About from "./pages/AboutPage";
+import Contact from "./pages/ContactPage";
 import CategoryPage from "./pages/CategoryPage";
 import MealPage from "./pages/MealPage";
 

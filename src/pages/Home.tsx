@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getAllCategories } from '../ts/queryManager';
-import ItemsList from '../components/ItemsList';
+import { getAllCategories } from '../core/queryManager';
+import ItemsList from '../components/helpers/ItemsList';
 
 interface Category {
     idCategory: string;

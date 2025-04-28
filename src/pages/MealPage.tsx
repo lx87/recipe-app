@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { getMealById } from "../ts/queryManager";
+import { getMealById } from "../core/queryManager";
 import Preloader from "../components/Preloader";
 
 interface MealData {

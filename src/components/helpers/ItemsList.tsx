@@ -1,5 +1,5 @@
-import CardItem from "./cardItem";
-import Preloader from "./Preloader";
+import CardItem from "./CardItem";
+import Preloader from "../Preloader";
 
 interface ItemsListProps<T> {
     items: T[];

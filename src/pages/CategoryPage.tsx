@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getMealsByCategory } from "../ts/queryManager";
+import { getMealsByCategory } from "../core/queryManager";
 import { useLocation } from "react-router";
-import ItemsList from "../components/ItemsList";
+import ItemsList from "../components/helpers/ItemsList";
 import Preloader from "../components/Preloader";
 
 interface Meal {
