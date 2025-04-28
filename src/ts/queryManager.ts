@@ -1,5 +1,12 @@
 import { API_URL } from "./constants";
 
+interface Meal {
+    idCategory: string;
+    strCategory: string;
+    strCategoryThumb: string;
+    strCategoryDescription: string;
+}
+
 const handleFetchError = async (response: Response) => {
     if (!response.ok) {
         const errorData = await response.json();
@@ -18,7 +25,7 @@ const getAllCategories = async () => {
     }
 }
 
-const getMealById = async (mealid: string) => {
+const getMealById = async (mealid: string): Promise<Meal> => {
     try {
         const response = await fetch(API_URL + "lookup.php?i=" + mealid);
         return await handleFetchError(response);
