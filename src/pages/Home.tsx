@@ -14,7 +14,7 @@ function Home() {
 
     useEffect(() => {
         getAllCategories().then((data) => {
-            setCategories(data?.categories || []);
+            setCategories(data.categories || []);
         });
     }, []);
 

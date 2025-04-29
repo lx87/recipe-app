@@ -5,8 +5,8 @@ function ContactPage() {
         <div className="p-0 container-fluid d-flex flex-column align-items-center py-5">
             <BreadcrumbProvider
                 items={[
-                    { label: "Home", path: "/" },
-                    { label: "Contact", path: "/contact" }
+                    { label: "Home", path:"/"},
+                    { label: "Contact" }
                 ]}
             />
             <h1>ContactPage</h1>

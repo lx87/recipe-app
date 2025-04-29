@@ -18,8 +18,8 @@ function BreadcrumbProvider({ items }: BreadcrumbProviderProps) {
   const navigate = useNavigate();
 
   const handleNavigate = async (path: string): Promise<void> => {
-    const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-    navigate(normalizedPath.toLowerCase());
+    const normalizedPath = path.toLowerCase();
+    navigate(normalizedPath);
   };
   
   return (

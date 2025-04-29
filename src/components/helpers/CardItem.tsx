@@ -15,7 +15,7 @@ interface CardItemProps {
 const CardItem = ({ item, linkPath }: CardItemProps) => {
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
+    const handleNavigate = ():void => {
         navigate(linkPath);
     };
     

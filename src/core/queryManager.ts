@@ -26,22 +26,22 @@ const getAllCategories = async () => {
     }
 }
 
-const getMealById = async (mealid: string): Promise<Meal> => {
-    try {
-        const response = await fetch(API_URL + `search.php?s=${mealid}`);
-        return await handleFetchError(response);
-    } catch (error) {
-        console.error(`Ошибка при получении блюда с ID ${mealid}:`, error);
-        throw error;
-    }
-}
-
 const getMealsByCategory = async (catName: string) => {
     try {
         const response = await fetch(API_URL + `filter.php?c=${catName}`);
         return await handleFetchError(response);
     } catch (error) {
         console.error(`Ошибка при получении категории ${catName}:`, error);
+        throw error;
+    }
+}
+
+const getMealById = async (mealid: string): Promise<Meal> => {
+    try {
+        const response = await fetch(API_URL + `search.php?s=${mealid}`);
+        return await handleFetchError(response);
+    } catch (error) {
+        console.error(`Ошибка при получении блюда с ID ${mealid}:`, error);
         throw error;
     }
 }
