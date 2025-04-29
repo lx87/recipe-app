@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMealById } from "../core/queryManager";
+import { getMealByName } from "../core/queryManager";
 import Preloader from "../components/Preloader";
 import BreadcrumbProvider from "../components/BreadcrumbProvider"
 
@@ -18,7 +18,7 @@ const MealPage = () => {
 
     useEffect(() => {
         if (id) {
-            getMealById(id).then((data) => {
+            getMealByName(id).then((data) => {
                 setMeal(data?.meals[0] || null);
             });
         }

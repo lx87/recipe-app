@@ -32,7 +32,7 @@ function Home() {
         <div className="p-0 container-fluid d-flex flex-column align-items-center py-5">
             <SearchInput
                 onSearch={(value) => { setSearch(value) }}
-                placeholder="Search category"
+                placeholder="Search by category"
             />
             <ItemsList
                 items={items}

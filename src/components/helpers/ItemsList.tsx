@@ -15,7 +15,7 @@ interface ItemsListProps {
 }
 
 const ItemsList = ({ items, filter }: ItemsListProps) => {
-    if (items.length === 0) {
+    if (items.length === 0 && !filter) {
         return <Preloader />;
     }
 
@@ -34,6 +34,7 @@ const ItemsList = ({ items, filter }: ItemsListProps) => {
                     linkPath={item.linkPath}
                 />
             ))}
+            {itemsToShow.length === 0 && <p>No meals found</p>}
         </div>
     );
 };

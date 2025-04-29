@@ -36,7 +36,7 @@ const getMealsByCategory = async (catName: string) => {
     }
 }
 
-const getMealById = async (mealid: string): Promise<Meal> => {
+const getMealByName = async (mealid: string): Promise<Meal> => {
     try {
         const response = await fetch(API_URL + `search.php?s=${mealid}`);
         return await handleFetchError(response);
@@ -46,4 +46,4 @@ const getMealById = async (mealid: string): Promise<Meal> => {
     }
 }
 
-export { getAllCategories, getMealById, getMealsByCategory }
+export { getAllCategories, getMealByName, getMealsByCategory }
