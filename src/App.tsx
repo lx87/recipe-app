@@ -9,20 +9,21 @@ import Contact from "./pages/ContactPage";
 import CategoryPage from "./pages/CategoryPage";
 import MealPage from "./pages/MealPage";
 
-
 function App() {
   return (
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/Category" element={<CategoryPage />} />
-          <Route path="/Meal" element={<MealPage />} />
-        </Routes>
-        <Footer />
-      </Router>
+    // <Router basename="/recipe-app"> Раскоментировать при деплое
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        
+        <Route path="/category/:name" element={<CategoryPage />} />
+        <Route path="/meal/:id" element={<MealPage />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 

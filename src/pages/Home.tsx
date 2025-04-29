@@ -18,19 +18,18 @@ function Home() {
         });
     }, []);
 
-    // Преобразуем категории в формат, ожидаемый ItemsList
     const items = categories.map(category => ({
         id: category.idCategory,
         title: category.strCategory,
         image: category.strCategoryThumb,
-        description: category.strCategoryDescription
+        description: category.strCategoryDescription,
+        linkPath: `/category/${category.strCategory.toLowerCase()}`
     }));
-
+    
     return (
         <div className="p-0 container-fluid d-flex flex-column align-items-center py-5">
             <ItemsList
                 items={items}
-                linkPath="/category"
             />
         </div>
     );

@@ -1,17 +1,45 @@
 import Breadcrumb from "react-bootstrap/Breadcrumb";
+import { useNavigate } from "react-router";
 
-interface BreadcrumbProviderProps {
-  active:string;
-  prev:string;
-  start:string;
+type StaticRoutes = "/" | "contact" | "about";
+type DynamicRoutes = `/category/${string}`;
+type RoutePath = StaticRoutes | DynamicRoutes;
+
+interface BreadcrumbItem {
+  label: string;
+  path?: RoutePath;
 }
 
-function BreadcrumbProvider({ active, prev, start }:BreadcrumbProviderProps) {
+interface BreadcrumbProviderProps {
+  items: BreadcrumbItem[];
+}
+
+function BreadcrumbProvider({ items }: BreadcrumbProviderProps) {
+  const navigate = useNavigate();
+
+  const handleNavigate = async (path: string): Promise<void> => {
+    const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+    navigate(normalizedPath.toLowerCase());
+  };
+  
   return (
-    <Breadcrumb>
-      <Breadcrumb.Item href="#/">{start}</Breadcrumb.Item>
-      {prev && <Breadcrumb.Item>{prev}</Breadcrumb.Item>}
-      <Breadcrumb.Item active>{active}</Breadcrumb.Item>
+    <Breadcrumb className="text-capitalize">
+      {items.map((item, index) => {
+        const isLast = index === items.length - 1;
+        if (isLast || !item.path) {
+          return (
+            <Breadcrumb.Item key={index} active>
+              {item.label}
+            </Breadcrumb.Item>
+          );
+        } else {
+          return (
+            <Breadcrumb.Item key={index} onClick={() => void handleNavigate(item.path!)}>
+              {item.label}
+            </Breadcrumb.Item>
+          );
+        }
+      })}
     </Breadcrumb>
   );
 }

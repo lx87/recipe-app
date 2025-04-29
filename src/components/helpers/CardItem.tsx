@@ -16,14 +16,9 @@ const CardItem = ({ item, linkPath }: CardItemProps) => {
     const navigate = useNavigate();
 
     const handleNavigate = () => {
-        navigate(linkPath, {
-            state: {
-                id: item.id,
-                title: item.title
-            }
-        });
-    }
-
+        navigate(linkPath);
+    };
+    
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={item.image} />

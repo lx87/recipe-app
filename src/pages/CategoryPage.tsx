@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { getMealsByCategory } from "../core/queryManager";
-import { useLocation } from "react-router";
 import ItemsList from "../components/helpers/ItemsList";
 import Preloader from "../components/Preloader";
+import BreadcrumbProvider from "../components/BreadcrumbProvider";
 
 interface Meal {
     idMeal: string;
@@ -11,29 +12,38 @@ interface Meal {
 }
 
 const CategoryPage = () => {
-    const location = useLocation();
-    const [meals, setMeals] = useState<Meal[]>([]);
-    const categoryName = location.state?.title || "";
+    const { name } = useParams<{ name: string }>();
+    const [meals, setMeals] = useState<Meal[] | null>(null);
 
     useEffect(() => {
-        if (categoryName) {
-            getMealsByCategory(categoryName).then((data) => {
-                setMeals(data?.meals || []);
-            });
-        }
-    }, [categoryName]);
+        if (!name) return;
 
-    if (!meals) return <Preloader />;
+        getMealsByCategory(name).then((data) => {
+            setMeals(data?.meals || []);
+        });
+    }, [name]);
+
+    if (!name || meals === null) return <Preloader />;
+
     return (
         <div className="container-fluid">
-            <h1>{categoryName}</h1>
+            <BreadcrumbProvider
+                items={[
+                    { label: "Home", path: "/" },
+                    { label: "Category" },
+                    { label: name}
+                ]}
+            />
+
+            <h1 className="text-capitalize">{name}</h1>
+
             <ItemsList
-                items={meals.map(meal => ({
+                items={meals.map((meal) => ({
                     id: meal.idMeal,
                     title: meal.strMeal,
-                    image: meal.strMealThumb
+                    image: meal.strMealThumb,
+                    linkPath: `/meal/${meal.strMeal}`,
                 }))}
-                linkPath="/meal"
             />
         </div>
     );

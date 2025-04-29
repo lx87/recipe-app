@@ -1,3 +1,5 @@
+import { API_URL } from "./constants";
+
 interface Meal {
     meals: any;
     idCategory: string;
@@ -16,7 +18,7 @@ const handleFetchError = async (response: Response) => {
 
 const getAllCategories = async () => {
     try {
-        const response = await fetch("https://www.themealdb.com/api/json/v1/1/categories.php");
+        const response = await fetch(API_URL + "categories.php");
         return await handleFetchError(response);
     } catch (error) {
         console.error("Ошибка при получении категорий:", error);
@@ -26,7 +28,7 @@ const getAllCategories = async () => {
 
 const getMealById = async (mealid: string): Promise<Meal> => {
     try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${mealid}`);
+        const response = await fetch(API_URL + `search.php?s=${mealid}`);
         return await handleFetchError(response);
     } catch (error) {
         console.error(`Ошибка при получении блюда с ID ${mealid}:`, error);
@@ -36,7 +38,7 @@ const getMealById = async (mealid: string): Promise<Meal> => {
 
 const getMealsByCategory = async (catName: string) => {
     try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${catName}`);
+        const response = await fetch(API_URL + `filter.php?c=${catName}`);
         return await handleFetchError(response);
     } catch (error) {
         console.error(`Ошибка при получении категории ${catName}:`, error);

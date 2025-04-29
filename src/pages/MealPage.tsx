@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useParams } from "react-router-dom";
 import { getMealById } from "../core/queryManager";
 import Preloader from "../components/Preloader";
+import BreadcrumbProvider from "../components/BreadcrumbProvider"
 
 interface MealData {
     strMeal: string;
@@ -12,22 +13,28 @@ interface MealData {
 }
 
 const MealPage = () => {
-    const location = useLocation();
-    const mealID = location.state?.title || "";
+    const { id } = useParams<{ id: string }>();
     const [meal, setMeal] = useState<MealData | null>(null);
 
     useEffect(() => {
-        if (mealID) {
-            getMealById(mealID).then((data) => {
+        if (id) {
+            getMealById(id).then((data) => {
                 setMeal(data?.meals[0] || null);
             });
         }
-    }, [mealID]);
+    }, [id]);
 
     if (!meal) return <Preloader />;
 
     return (
-        <div className="container">
+        <div className="container-fluid d-flex flex-column align-items-start text-start">
+            <BreadcrumbProvider
+                items={[
+                    { label: "Home", path: "/" },
+                    { label: meal.strCategory, path: `/category/${meal.strCategory}` },
+                    { label: "Recipe" }
+                ]}
+            />
             <h1>{meal.strMeal}</h1>
             {meal.strMealThumb && (
                 <img
@@ -37,19 +44,15 @@ const MealPage = () => {
                 />
             )}
             <p>
-                <strong>Category:</strong>
-                {meal.strCategory}
+                <strong>Category:</strong> {meal.strCategory}
             </p>
             <p>
-                <strong>Cuisine:</strong>
-                {meal.strArea}
+                <strong>Cuisine:</strong> {meal.strArea}
             </p>
-            <div className="mt-4">
-                <h3>Instructions:</h3>
-                <p>{meal.strInstructions}</p>
-            </div>
+            <h3>Instructions:</h3>
+            <p>{meal.strInstructions}</p>
         </div>
     );
-}
+};
 
 export default MealPage;
