@@ -11,16 +11,23 @@ interface Item {
 
 interface ItemsListProps {
     items: Item[];
+    filter?: string
 }
 
-const ItemsList = ({ items }: ItemsListProps) => {
+const ItemsList = ({ items, filter }: ItemsListProps) => {
     if (items.length === 0) {
         return <Preloader />;
     }
 
+    const itemsToShow = filter
+        ? items.filter(item =>
+            item.title.toLowerCase().includes(filter.toLowerCase())
+        )
+        : items;
+
     return (
         <div className="container-fluid p-0 m-0 list d-flex flex-wrap gap-3 justify-content-center">
-            {items.map((item) => (
+            {itemsToShow.map((item) => (
                 <CardItem
                     key={item.id}
                     item={item}

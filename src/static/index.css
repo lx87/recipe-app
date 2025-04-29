@@ -46,3 +46,21 @@ a:hover {
   grid-template-rows: auto;
   gap: 2rem;
 }
+
+.footer-main{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+}
+
+.footer-main p{
+  margin: 0;
+}
+
+.footer-main p:first-child{
+  justify-self: start;
+}
+
+.footer-main a{
+  justify-self: end;
+}

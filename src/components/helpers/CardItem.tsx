@@ -1,6 +1,6 @@
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router';
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 
 interface CardItemProps {
     item: {
@@ -15,10 +15,10 @@ interface CardItemProps {
 const CardItem = ({ item, linkPath }: CardItemProps) => {
     const navigate = useNavigate();
 
-    const handleNavigate = ():void => {
+    const handleNavigate = (): void => {
         navigate(linkPath);
     };
-    
+
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={item.image} />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { getMealsByCategory } from "../core/queryManager";
 import ItemsList from "../components/helpers/ItemsList";
 import Preloader from "../components/Preloader";
@@ -34,9 +34,7 @@ const CategoryPage = () => {
                     { label: name}
                 ]}
             />
-
             <h1 className="text-capitalize">{name}</h1>
-
             <ItemsList
                 items={meals.map((meal) => ({
                     id: meal.idMeal,

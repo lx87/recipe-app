@@ -8,6 +8,7 @@ import About from "./pages/AboutPage";
 import Contact from "./pages/ContactPage";
 import CategoryPage from "./pages/CategoryPage";
 import MealPage from "./pages/MealPage";
+import NoMatch from "./pages/NoMatch";
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
     <Router>
       <Header />
       <Routes>
+        <Route path="*" element={<NoMatch />} />
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
-        
+
         <Route path="/category/:name" element={<CategoryPage />} />
         <Route path="/meal/:id" element={<MealPage />} />
       </Routes>

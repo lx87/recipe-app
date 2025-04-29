@@ -1,12 +1,11 @@
 const Footer = () => {
     return (
-        <footer className="bg-dark text-light text-center py-3">
-            <p className="m-0">© 2025 All rights {" "}
-                <span className="fw-bold fst-italic">probably</span> {" "}
-                reserved, developed by Rami <span className="fw-bold fst-italic">LX</span> Laily
-                Adoevtsev <span className="fw-bold fst-italic">Kaatori</span> Dmitry
-                and Eugene <span className="fw-bold fst-italic">AMD</span> Afanasyev
+        <footer className="bg-dark text-light footer-main p-3">
+            <p>© 2025 All rights {" "}
+                <span className="fw-bold fst-italic">probably</span> reserved
             </p>
+            <p><b>Developed by:</b> Rami LX Laily, Adoevtsev Kaatori Dmitry and Eugene AMD Afanasyev</p>
+            <a href="https://github.com/lx87/recipe-app">GitHub</a>
         </footer>
     );
 };
