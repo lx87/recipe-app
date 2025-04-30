@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMealByName } from "../core/queryManager";
+import { fetchData } from "../core/queryManager";
 import Preloader from "../components/Preloader";
 import BreadcrumbProvider from "../components/BreadcrumbProvider"
 
@@ -13,16 +13,16 @@ interface MealData {
 }
 
 const MealPage = () => {
-    const { id } = useParams<{ id: string }>();
+    const { mealName } = useParams<{ mealName: string }>();
     const [meal, setMeal] = useState<MealData | null>(null);
 
     useEffect(() => {
-        if (id) {
-            getMealByName(id).then((data) => {
+        if (mealName) {
+            fetchData({ type: "mealByName", name: `${mealName}` }).then((data) => {
                 setMeal(data?.meals[0] || null);
             });
         }
-    }, [id]);
+    }, [mealName]);
 
     if (!meal) return <Preloader />;
 

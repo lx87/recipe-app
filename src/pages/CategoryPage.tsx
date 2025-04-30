@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMealsByCategory } from "../core/queryManager";
+import { fetchData } from "../core/queryManager";
 import ItemsList from "../components/helpers/ItemsList";
 import BreadcrumbProvider from "../components/BreadcrumbProvider";
 import SearchInput from "../components/helpers/SearchInput";
@@ -18,7 +18,7 @@ const CategoryPage = () => {
 
     useEffect(() => {
         if (!name) return;
-        getMealsByCategory(name).then((data) => {
+        fetchData({ type: "mealsByCategory", category: `${name}` }).then((data) => {
             setMeals(data.meals || []);
         });
     }, [name]);

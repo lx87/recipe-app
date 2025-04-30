@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllCategories } from '../core/queryManager';
+import { fetchData } from '../core/queryManager';
 import ItemsList from '../components/helpers/ItemsList';
 import SearchInput from '../components/helpers/SearchInput';
 
@@ -15,7 +15,7 @@ function Home() {
     const [search, setSearch] = useState<string>("");
 
     useEffect(() => {
-        getAllCategories().then((data) => {
+        fetchData({ type: 'allCategories'}).then((data) => {
             setCategories(data.categories || []);
         });
     }, []);
