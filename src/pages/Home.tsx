@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
 import { fetchData } from '../core/queryManager';
-import ItemsList from '../components/helpers/ItemsList';
-import SearchInput from '../components/helpers/SearchInput';
-
-interface Category {
-    idCategory: string;
-    strCategory: string;
-    strCategoryThumb: string;
-    strCategoryDescription: string;
-}
+import ItemsList from '../components/shared/ItemsList';
+import SearchInput from '../components/shared/SearchInput';
+import { Category } from '../types/mealTypes';
 
 function Home() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [search, setSearch] = useState<string>("");
 
     useEffect(() => {
-        fetchData({ type: 'allCategories'}).then((data) => {
+        fetchData("allCategories").then((data) => {
             setCategories(data.categories || []);
         });
     }, []);

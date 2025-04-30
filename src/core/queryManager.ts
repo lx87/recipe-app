@@ -1,40 +1,40 @@
 import { API_URL } from "./constants";
+import { CategoriesResponse, MealsPreviewResponse, MealsResponse } from "../types/mealTypes";
 
-type Endpoint =
-    | { type: "allCategories" }
-    | { type: "mealsByCategory"; category: string }
-    | { type: "mealByName"; name: string };
+type FetchParams =
+    | ["allCategories"]
+    | ["mealsByCategory", string]
+    | ["mealByName", string];
 
-const handleFetchError = async (response: Response) => {
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Ошибка при получении данных');
-    }
-    return response.json();
-}
-
-const buildUrl = (endpoint: Endpoint): string => {
-    switch (endpoint.type) {
+const buildUrl = (...params: FetchParams): string => {
+    switch (params[0]) {
         case "allCategories":
             return `${API_URL}categories.php`;
         case "mealsByCategory":
-            return `${API_URL}filter.php?c=${encodeURIComponent(endpoint.category)}`;
+            return `${API_URL}filter.php?c=${encodeURIComponent(params[1])}`;
         case "mealByName":
-            return `${API_URL}search.php?s=${encodeURIComponent(endpoint.name)}`;
-        default:
-            throw new Error("Error: Unknown query");
+            return `${API_URL}search.php?s=${encodeURIComponent(params[1])}`;
     }
-}
+};
 
-const fetchData = async (endpoint: Endpoint): Promise<any> => {
+// Перегрузки
+function fetchData(...params: ["allCategories"]): Promise<CategoriesResponse>;
+function fetchData(...params: ["mealsByCategory", string]): Promise<MealsPreviewResponse>;
+function fetchData(...params: ["mealByName", string]): Promise<MealsResponse>;
+
+async function fetchData(...params: FetchParams): Promise<any> {
     try {
-        const url = buildUrl(endpoint);
+        const url = buildUrl(...params);
         const response = await fetch(url);
-        return await handleFetchError(response);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Ошибка при получении данных");
+        }
+        return await response.json();
     } catch (error) {
-        console.error(`Ошибка при запросе ${endpoint.type}:`, error);
+        console.error(`Ошибка при запросе ${params[0]}:`, error);
         throw error;
     }
 }
 
-export { fetchData }
+export { fetchData };

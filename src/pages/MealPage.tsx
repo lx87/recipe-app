@@ -3,27 +3,34 @@ import { useParams } from "react-router-dom";
 import { fetchData } from "../core/queryManager";
 import Preloader from "../components/Preloader";
 import BreadcrumbProvider from "../components/BreadcrumbProvider"
-
-interface MealData {
-    strMeal: string;
-    strInstructions: string;
-    strCategory: string;
-    strArea: string;
-    strMealThumb?: string;
-}
+import { Meal } from "../types/mealTypes";
 
 const MealPage = () => {
-    const { mealName } = useParams<{ mealName: string }>();
-    const [meal, setMeal] = useState<MealData | null>(null);
+    const { id } = useParams<{ id: string }>();
+    const [meal, setMeal] = useState<Meal | null>(null);
+    const [error, setError] = useState<boolean>(false);
+    const mealName = id
 
     useEffect(() => {
         if (mealName) {
-            fetchData({ type: "mealByName", name: `${mealName}` }).then((data) => {
-                setMeal(data?.meals[0] || null);
-            });
+            fetchData("mealByName", mealName)
+                .then((data) => {
+                    if (data.meals && data.meals.length > 0) {
+                        setMeal(data.meals[0]);
+                    } else {
+                        setMeal(null);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Ошибка при загрузке данных:", error);
+                    setError(error)
+                    setMeal(null);
+                });
         }
     }, [mealName]);
 
+
+    if (error) return <h1>{error}</h1>
     if (!meal) return <Preloader />;
 
     return (

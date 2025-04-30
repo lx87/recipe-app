@@ -1,24 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../core/queryManager";
-import ItemsList from "../components/helpers/ItemsList";
+import ItemsList from "../components/shared/ItemsList";
 import BreadcrumbProvider from "../components/BreadcrumbProvider";
-import SearchInput from "../components/helpers/SearchInput";
-
-interface Meal {
-    idMeal: string;
-    strMeal: string;
-    strMealThumb: string;
-}
+import SearchInput from "../components/shared/SearchInput";
+import { MealPreview } from "../types/mealTypes";
 
 const CategoryPage = () => {
     const { name } = useParams<{ name: string }>();
-    const [meals, setMeals] = useState<Meal[]>([]);
+    const [meals, setMeals] = useState<MealPreview[]>([]);
     const [filter, setFilter] = useState<string>("");
 
     useEffect(() => {
         if (!name) return;
-        fetchData({ type: "mealsByCategory", category: `${name}` }).then((data) => {
+        fetchData("mealsByCategory", name).then((data) => {
             setMeals(data.meals || []);
         });
     }, [name]);
