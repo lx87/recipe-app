@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../core/queryManager";
 import ItemsList from "../components/shared/ItemsList";
-import BreadcrumbProvider from "../components/BreadcrumbProvider";
 import SearchInput from "../components/shared/SearchInput";
 import { MealPreview } from "../types/mealTypes";
+import { BreadcrumbPlus } from "../components/BreadcrumbProvider";
 
 const CategoryPage = () => {
     const { name } = useParams<{ name: string }>();
@@ -26,13 +26,11 @@ const CategoryPage = () => {
 
     return (
         <div className="container-fluid">
-            <BreadcrumbProvider
-                items={[
-                    { label: "Home", path: "/" },
-                    { label: "Category" },
-                    { label: name || "Unknown-category" }
-                ]}
-            />
+            <BreadcrumbPlus.Provider>
+                <BreadcrumbPlus.Item label="Home" path="/" />
+                <BreadcrumbPlus.Item label="Category" />
+                <BreadcrumbPlus.Item label={`${name || "Unkown-category"}`} />
+            </BreadcrumbPlus.Provider>
             <SearchInput placeholder="Search by name" onSearch={(value) => setFilter(value)} />
             <h1 className="text-capitalize">{name}</h1>
             <ItemsList

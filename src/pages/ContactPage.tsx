@@ -1,14 +1,11 @@
-import BreadcrumbProvider from "../components/BreadcrumbProvider";
-
+import { BreadcrumbPlus } from "../components/BreadcrumbProvider";
 function ContactPage() {
     return (
         <div className="p-0 container-fluid d-flex flex-column align-items-center py-5">
-            <BreadcrumbProvider
-                items={[
-                    { label: "Home", path:"/"},
-                    { label: "Contact" }
-                ]}
-            />
+            <BreadcrumbPlus.Provider>
+                <BreadcrumbPlus.Item label="Home" path="/" />
+                <BreadcrumbPlus.Item label="Contact" />
+            </BreadcrumbPlus.Provider>
             <h1>ContactPage</h1>
         </div>
     );

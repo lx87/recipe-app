@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../core/queryManager";
 import Preloader from "../components/Preloader";
-import BreadcrumbProvider from "../components/BreadcrumbProvider"
+import { BreadcrumbPlus } from "../components/BreadcrumbProvider";
 import { Meal } from "../types/mealTypes";
 
 const MealPage = () => {
@@ -35,13 +35,14 @@ const MealPage = () => {
 
     return (
         <div className="container-fluid d-flex flex-column align-items-start text-start">
-            <BreadcrumbProvider
-                items={[
-                    { label: "Home", path: "/" },
-                    { label: meal.strCategory, path: `/category/${meal.strCategory}` },
-                    { label: "Recipe" }
-                ]}
-            />
+            <BreadcrumbPlus.Provider>
+                <BreadcrumbPlus.Item label="Home" path="/" />
+                <BreadcrumbPlus.Truncate>
+                    <BreadcrumbPlus.Child label="Category" asText separated />
+                    <BreadcrumbPlus.Child label={`${meal.strCategory}`} path={`/category/${meal.strCategory}`} />
+                </BreadcrumbPlus.Truncate>
+                <BreadcrumbPlus.Item label="Recipe" />
+            </BreadcrumbPlus.Provider>
             <h1>{meal.strMeal}</h1>
             {meal.strMealThumb && (
                 <img
