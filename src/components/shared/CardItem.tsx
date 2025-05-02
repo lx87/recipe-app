@@ -20,7 +20,7 @@ const CardItem = ({ item, linkPath }: CardItemProps) => {
     };
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card>
             <Card.Img variant="top" className="p-3 rounded-3" src={item.image} />
             <hr className="m-0" />
             <Card.Body>

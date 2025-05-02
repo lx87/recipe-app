@@ -23,15 +23,15 @@ function Home() {
     }));
 
     return (
-        <div className="p-0 container-fluid d-flex flex-column py-5 align-items-center gap-3">
+        <div className="container-fluid d-flex flex-column overflow-auto">
             <SearchInput
-                onSearch={(value) => { setSearch(value) }}
-                placeholder="Search by category"
-            />
-            <ItemsList
-                items={items}
-                filter={search}
-            />
+                onSearch={(value) => { setSearch(value); }}
+                placeholder="Search by category" />
+            <div className="p-0 container-fluid d-flex flex-column py-3 align-items-center gap-3">
+                <ItemsList
+                    items={items}
+                    filter={search} />
+            </div>
         </div>
     );
 }

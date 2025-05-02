@@ -25,14 +25,16 @@ const CategoryPage = () => {
         : meals;
 
     return (
-        <div className="container-fluid d-flex flex-column">
-            <BreadcrumbPlus>
-                <BreadcrumbPlus.Item label="Home" path="/" />
-                <BreadcrumbPlus.Item label="Category" />
-                <BreadcrumbPlus.Item label={`${name || "Unkown-category"}`} />
-            </BreadcrumbPlus>
+        <div className="container-fluid d-flex flex-column overflow-auto">
+            <div className="w-100 d-flex  justify-content-between align-content-center bg-body-tertiary z-3">
+                <BreadcrumbPlus>
+                    <BreadcrumbPlus.Item label="Home" path="/" />
+                    <BreadcrumbPlus.Item label="Category" />
+                    <BreadcrumbPlus.Item label={`${name || "Unkown-category"}`} />
+                </BreadcrumbPlus>
+                <SearchInput placeholder="Search by name" onSearch={(value) => setFilter(value)} />
+            </div>
             <h1 className="text-capitalize align-self-start">{name}</h1>
-            <SearchInput placeholder="Search by name" onSearch={(value) => setFilter(value)} />
             <div className="p-0 container-fluid d-flex flex-column py-3 align-items-center gap-3">
                 <ItemsList
                     items={mealsToShow.map((meal) => ({

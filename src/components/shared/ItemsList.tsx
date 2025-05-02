@@ -26,14 +26,16 @@ const ItemsList = ({ items, filter }: ItemsListProps) => {
         : items;
 
     return (
-        <div className="container-fluid d-flex flex-column align-items-center">
-            <div className="grid-container">
+        <div className="row gap-5">
+            <div className="row">
                 {itemsToShow.map((item) => (
-                    <CardItem
-                        key={item.id}
-                        item={item}
-                        linkPath={item.linkPath}
-                    />
+                    <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <CardItem
+                            key={item.id}
+                            item={item}
+                            linkPath={item.linkPath}
+                        />
+                    </div>
                 ))}
                 {itemsToShow.length === 0 && <p>No meals found</p>}
             </div>
