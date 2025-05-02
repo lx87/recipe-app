@@ -23,7 +23,7 @@ function Home() {
     }));
 
     return (
-        <div className="container-fluid d-flex flex-column overflow-auto">
+        <div className="container-fluid d-flex flex-column overflow-auto pt-3">
             <SearchInput
                 onSearch={(value) => { setSearch(value); }}
                 placeholder="Search by category" />

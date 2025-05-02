@@ -18,34 +18,35 @@ const CategoryPage = () => {
         });
     }, [name]);
 
-    const mealsToShow = filter
-        ? meals.filter(meal =>
-            meal.strMeal.toLowerCase().includes(filter.toLowerCase())
-        )
-        : meals;
+    const mealsToShow = filter ? meals.filter((meal) => meal.strMeal.toLowerCase().includes(filter.toLowerCase())) : meals;
 
     return (
-        <div className="container-fluid d-flex flex-column overflow-auto">
-            <div className="w-100 d-flex  justify-content-between align-content-center bg-body-tertiary z-3">
+        <>
+            <div className="w-100 d-flex p-2 justify-content-between align-content-center bg-body-tertiary z-3">
                 <BreadcrumbPlus>
-                    <BreadcrumbPlus.Item label="Home" path="/" />
-                    <BreadcrumbPlus.Item label="Category" />
-                    <BreadcrumbPlus.Item label={`${name || "Unkown-category"}`} />
+                    <BreadcrumbPlus.Item path="/">Home</BreadcrumbPlus.Item>
+                    <BreadcrumbPlus.Item>Category</BreadcrumbPlus.Item>
+                    <BreadcrumbPlus.Item>{`${name || "Unkown-category"}`}</BreadcrumbPlus.Item>
                 </BreadcrumbPlus>
                 <SearchInput placeholder="Search by name" onSearch={(value) => setFilter(value)} />
             </div>
-            <h1 className="text-capitalize align-self-start">{name}</h1>
-            <div className="p-0 container-fluid d-flex flex-column py-3 align-items-center gap-3">
-                <ItemsList
-                    items={mealsToShow.map((meal) => ({
-                        id: meal.idMeal,
-                        title: meal.strMeal,
-                        image: meal.strMealThumb,
-                        linkPath: `/meal/${meal.strMeal}`,
-                    }))}
-                    filter={filter} />
+            <div className="container-fluid d-flex flex-column overflow-auto">
+                <div className="d-flex align-items-center justify-content-center ayam-percik py-5">
+                    <h1 className="text-capitalize align-self-center display-1 fw-medium shadow py-5">{name}</h1>
+                </div>
+                <div className="p-0 container-fluid d-flex flex-column py-3 align-items-center gap-3">
+                    <ItemsList
+                        items={mealsToShow.map((meal) => ({
+                            id: meal.idMeal,
+                            title: meal.strMeal,
+                            image: meal.strMealThumb,
+                            linkPath: `/meal/${meal.strMeal}`,
+                        }))}
+                        filter={filter}
+                    />
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

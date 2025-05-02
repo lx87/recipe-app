@@ -27,7 +27,8 @@ const CardItem = ({ item, linkPath }: CardItemProps) => {
                 <Card.Title>{item.title.slice(0, 24)}</Card.Title>
                 {item.description ? (
                     <Card.Text>
-                        {item.description.slice(0, 60)}
+                        {item.description.slice(0, 50)}
+                        {"..."}
                     </Card.Text>
                 ) : <Card.Text>{"#"}{item.id}</Card.Text>}
             </Card.Body>
