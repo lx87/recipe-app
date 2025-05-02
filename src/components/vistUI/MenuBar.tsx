@@ -11,12 +11,9 @@ type Shortcut = `${ShortcutSymbol}${string}`;
 const MenuBarVariantContext = createContext<Variant | undefined>(undefined);
 
 interface MenuBarProps {
-  children: ReactElement<MenuBarItemProps>[] | ReactElement;
+  children: ReactElement[] | ReactElement;
   variant?: Variant;
-}
-
-interface MenuBarItemProps {
-  label: string;
+  className?: string;
 }
 
 interface MenuBarDropdownProps {
@@ -25,16 +22,15 @@ interface MenuBarDropdownProps {
 }
 
 interface MenuBarDropdownTriggerProps {
-  label: string;
   disabled?: boolean;
   shortcut?: Shortcut
 }
 
-const MenuBarComponent = ({ children, variant = "outline-primary" }: MenuBarProps) => {
+const MenuBarComponent = ({ children, variant = "outline-primary", className }: MenuBarProps) => {
   return (
     <MenuBarVariantContext.Provider value={variant}>
       <ButtonToolbar
-        className="gap-1 bg-body rounded-3 border border-light-subtle"
+        className={`gap-1 bg-body rounded-3 border border-light-subtle ${className ?? ""}`}
         style={{ padding: "4px" }}
       >
         {React.Children.map(children, (child) =>
@@ -45,7 +41,7 @@ const MenuBarComponent = ({ children, variant = "outline-primary" }: MenuBarProp
   );
 };
 
-const MenuBarItemComponent = ({ label }: MenuBarItemProps) => {
+const MenuBarItemComponent = ({ children }: React.PropsWithChildren) => {
   const variant = useContext(MenuBarVariantContext);
   return (
     <Button
@@ -53,7 +49,7 @@ const MenuBarItemComponent = ({ label }: MenuBarItemProps) => {
       style={{ padding: "4px 12px", transition: "none" }}
       variant={variant}
     >
-      {label}
+      {children}
     </Button>
   );
 };
@@ -82,11 +78,7 @@ const MenuBarDropdownComponent = ({ label, children }: MenuBarDropdownProps) => 
       ref={ref}
       onClick={() => setShow((prev) => !prev)}
     >
-      <Button
-        className="border-0 text-body"
-        style={{ padding: "4px 12px", transition: "none" }}
-        variant={variant}
-      >
+      <Button className="border-0 text-body" style={{ padding: "4px 12px", transition: "none" }} variant={variant} >
         {label}
       </Button>
 
@@ -107,7 +99,7 @@ const MenuBarDropdownComponent = ({ label, children }: MenuBarDropdownProps) => 
   );
 };
 
-const MenuBarDropdownTrigger = ({ label, disabled, shortcut }: MenuBarDropdownTriggerProps) => {
+const MenuBarDropdownTrigger = ({ disabled, shortcut, children }: React.PropsWithChildren<MenuBarDropdownTriggerProps>) => {
   const variant = useContext(MenuBarVariantContext);
   return (
     <Button
@@ -116,7 +108,7 @@ const MenuBarDropdownTrigger = ({ label, disabled, shortcut }: MenuBarDropdownTr
       variant={variant}
       disabled={disabled}
     >
-      <span>{label}</span>
+      <span>{children}</span>
       <span className="text-muted">{shortcut}</span>
     </Button>
   );

@@ -13,31 +13,30 @@ type BreadcrumbPlusComponent = typeof BreadcrumbComponent & {
   Item: typeof BreadcrumbItem;
   Truncate: typeof BreadcrumbTruncate;
   Child: typeof BreadcrumbChild;
+  Separator: typeof BreadcrumbTruncateSeparator
 };
 
 interface BreadcrumbItemProps {
-  label: string;
   path?: RoutePath;
   isLast?: boolean;
 }
 
 interface BreadcrumbProviderProps {
-  children: ReactElement<BreadcrumbItemProps>[];
+  children: ReactElement<BreadcrumbItemProps> | ReactElement<BreadcrumbItemProps>[]
   variant?: Variant;
+  className?: string
 }
 
 type BreadcrumbChildProps = | {
-  label: string;
   asText: true;
-  separated?: boolean;
+  path?: never;
+
   disabled?: boolean;
   variant?: never;
-  path?: never;
 } | {
-  label: string;
-  path: RoutePath;
   asText?: false;
-  separated?: boolean;
+  path: RoutePath;
+
   disabled?: boolean;
   variant?: Variant;
 };
@@ -50,12 +49,12 @@ interface BreadcrumbTruncateProps {
 }
 
 
-const BreadcrumbComponent = ({ children, variant }: BreadcrumbProviderProps) => {
+const BreadcrumbComponent = ({ children, variant, className }: BreadcrumbProviderProps) => {
   const total = React.Children.count(children);
 
   return (
     <BreadcrumbVariantContext.Provider value={variant}>
-      <Breadcrumb className="text-capitalize">
+      <Breadcrumb className={`text-capitalize ${className ?? ""}`}>
         {React.Children.map(children, (child, index) => {
           if (!React.isValidElement<BreadcrumbItemProps>(child)) return null;
           return React.cloneElement(child, {
@@ -67,50 +66,41 @@ const BreadcrumbComponent = ({ children, variant }: BreadcrumbProviderProps) => 
   );
 };
 
-const BreadcrumbItem = ({ label, path, isLast }: BreadcrumbItemProps) => {
+const BreadcrumbItem = ({ path, isLast, children }: React.PropsWithChildren<BreadcrumbItemProps>) => {
   const navigate = useNavigate();
-
-  if (label === "..." || !label) {
-    return (
-      <Breadcrumb.Item active style={{ cursor: "default" }}>
-        <i className="bi bi-three-dots" />
-      </Breadcrumb.Item>
-    );
-  }
-
   if (isLast || !path) {
     return (
       <Breadcrumb.Item active style={{ cursor: "default" }}>
-        {label}
+        {children}
       </Breadcrumb.Item>
     );
   }
 
   return (
-    <Breadcrumb.Item onClick={() => navigate(path)}>{label}</Breadcrumb.Item>
+    <Breadcrumb.Item onClick={() => navigate(path)}>{children}</Breadcrumb.Item>
   );
 };
 
-const BreadcrumbChild = ({ label, path, separated, disabled, variant: localVariant, asText }: BreadcrumbChildProps) => {
+const BreadcrumbChild = ({ children, path, disabled, variant: localVariant, asText }: React.PropsWithChildren<BreadcrumbChildProps>) => {
   const navigate = useNavigate();
   const contextVariant = useContext(BreadcrumbVariantContext);
 
   const variant = localVariant || contextVariant || "secondary";
 
   if (asText) {
-    return <Dropdown.ItemText className="fw-bold">{label}</Dropdown.ItemText>;
+    return <Dropdown.ItemText className="fw-bold">{children}</Dropdown.ItemText>;
   }
 
   return (
     <Dropdown.Item
       onClick={() => navigate(path!)}
-      style={{ transition: "none", textTransform: "capitalize" }}
+      className="border-0 text-body w-100 text-start"
+      style={{ padding: "4px 12px", transition: "none", borderRadius: "6px" }}
       disabled={disabled}
-      data-separated={separated || undefined}
       as={Button}
       variant={variant}
     >
-      {label}
+      {children}
     </Dropdown.Item>
   );
 };
@@ -144,32 +134,29 @@ const BreadcrumbTruncate = ({ label, children, useIcon }: BreadcrumbTruncateProp
       {show && (
         <Dropdown.Menu
           show
-          className="position-absolute"
-          style={{ top: "100%", left: 0, zIndex: 1000 }}
+          className="position-absolute d-flex flex-column gap-1"
+          style={{ top: "110%", marginTop: "5px", left: 0, zIndex: 1000, padding: "4px" }}
         >
-          {React.Children.map(children, (child, i) => {
-            if (!React.isValidElement<{ separated?: boolean }>(child))
-              return null;
-            const separated = child.props.separated;
-            const total = React.Children.count(children);
-            const isLast = i === total - 1;
-
-            return (
-              <React.Fragment key={i}>
-                {separated && i !== 0 && <Dropdown.Divider />}
-                {child}
-                {separated && !isLast && <Dropdown.Divider />}
-              </React.Fragment>
-            );
-          })}
+          {React.Children.map(children, (child, index) =>
+            React.isValidElement(child)
+              ? React.cloneElement(child, { key: index })
+              : null
+          )}
         </Dropdown.Menu>
       )}
     </div>
   );
 };
 
+const BreadcrumbTruncateSeparator = () => {
+  return (
+    <hr style={{ margin: "2px -4px" }} />
+  );
+}
+
 export const BreadcrumbPlus: BreadcrumbPlusComponent = Object.assign(BreadcrumbComponent, {
   Item: BreadcrumbItem,
   Truncate: BreadcrumbTruncate,
   Child: BreadcrumbChild,
+  Separator: BreadcrumbTruncateSeparator,
 });
