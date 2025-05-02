@@ -12,7 +12,7 @@ function AboutPage() {
                     <BreadcrumbPlus.Child label="Header" asText separated />
                     <BreadcrumbPlus.Child label="link 1" path="/" />
                     <BreadcrumbPlus.Child label="default separated" path="/" separated />
-                    <BreadcrumbPlus.Child label="Plain text" path="/" asText />
+                    <BreadcrumbPlus.Child label="Plain text" asText />
                     <BreadcrumbPlus.Child label="link 2" path="/" />
                     <BreadcrumbPlus.Child label="Footer" asText separated />
                 </BreadcrumbPlus.Truncate>

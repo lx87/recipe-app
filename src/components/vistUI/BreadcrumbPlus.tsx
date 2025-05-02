@@ -26,21 +26,22 @@ interface BreadcrumbProviderProps {
   variant?: Variant;
 }
 
-interface BreadcrumbChildPropsBase {
+type BreadcrumbChildProps = | {
   label: string;
+  asText: true;
   separated?: boolean;
   disabled?: boolean;
   variant?: Variant;
-  asText?: boolean;
-}
-
-interface BreadcrumbChildPropsWithPath extends BreadcrumbChildPropsBase {
-  path: RoutePath;
-}
-
-interface BreadcrumbChildPropsWithoutPath extends BreadcrumbChildPropsBase {
   path?: never;
-}
+} | {
+  label: string;
+  path: RoutePath;
+  asText?: false;
+  separated?: boolean;
+  disabled?: boolean;
+  variant?: Variant;
+};
+
 
 interface BreadcrumbTruncateProps {
   label?: string;
@@ -48,7 +49,6 @@ interface BreadcrumbTruncateProps {
   useIcon?: boolean;
 }
 
-type BreadcrumbChildProps = | BreadcrumbChildPropsWithPath | BreadcrumbChildPropsWithoutPath;
 
 const BreadcrumbComponent = ({ children, variant }: BreadcrumbProviderProps) => {
   const total = React.Children.count(children);
