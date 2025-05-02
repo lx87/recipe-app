@@ -4,7 +4,7 @@ import { fetchData } from "../core/queryManager";
 import ItemsList from "../components/shared/ItemsList";
 import SearchInput from "../components/shared/SearchInput";
 import { MealPreview } from "../types/mealTypes";
-import { BreadcrumbPlus } from "../components/BreadcrumbProvider";
+import { BreadcrumbPlus } from "../components/vistUI/BreadcrumbPlus";
 
 const CategoryPage = () => {
     const { name } = useParams<{ name: string }>();
@@ -26,11 +26,11 @@ const CategoryPage = () => {
 
     return (
         <div className="container-fluid">
-            <BreadcrumbPlus.Provider>
+            <BreadcrumbPlus>
                 <BreadcrumbPlus.Item label="Home" path="/" />
                 <BreadcrumbPlus.Item label="Category" />
                 <BreadcrumbPlus.Item label={`${name || "Unkown-category"}`} />
-            </BreadcrumbPlus.Provider>
+            </BreadcrumbPlus>
             <SearchInput placeholder="Search by name" onSearch={(value) => setFilter(value)} />
             <h1 className="text-capitalize">{name}</h1>
             <ItemsList

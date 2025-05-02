@@ -5,10 +5,15 @@ import { Breadcrumb, Button, Dropdown, type ButtonProps } from "react-bootstrap"
 type StaticRoutes = "/" | "/contact" | "/about";
 type DynamicRoutes = `/category/${string}`;
 type RoutePath = StaticRoutes | DynamicRoutes;
-
 type Variant = ButtonProps["variant"];
 
 const BreadcrumbVariantContext = createContext<Variant | undefined>(undefined);
+
+type BreadcrumbPlusComponent = typeof BreadcrumbComponent & {
+  Item: typeof BreadcrumbItem;
+  Truncate: typeof BreadcrumbTruncate;
+  Child: typeof BreadcrumbChild;
+};
 
 interface BreadcrumbItemProps {
   label: string;
@@ -37,15 +42,15 @@ interface BreadcrumbChildPropsWithoutPath extends BreadcrumbChildPropsBase {
   path?: never;
 }
 
-type BreadcrumbChildProps = BreadcrumbChildPropsWithPath | BreadcrumbChildPropsWithoutPath;
-
 interface BreadcrumbTruncateProps {
   label?: string;
   children: ReactNode;
   useIcon?: boolean;
 }
 
-const BreadcrumbProvider = ({ children, variant }: BreadcrumbProviderProps) => {
+type BreadcrumbChildProps = | BreadcrumbChildPropsWithPath | BreadcrumbChildPropsWithoutPath;
+
+const BreadcrumbComponent = ({ children, variant }: BreadcrumbProviderProps) => {
   const total = React.Children.count(children);
 
   return (
@@ -70,19 +75,19 @@ const BreadcrumbItem = ({ label, path, isLast }: BreadcrumbItemProps) => {
       <Breadcrumb.Item active style={{ cursor: "default" }}>
         <i className="bi bi-three-dots" />
       </Breadcrumb.Item>
-    )
+    );
   }
 
   if (isLast || !path) {
-    return <Breadcrumb.Item active style={{ cursor: "default" }}>{label}</Breadcrumb.Item>;
+    return (
+      <Breadcrumb.Item active style={{ cursor: "default" }}>
+        {label}
+      </Breadcrumb.Item>
+    );
   }
 
   return (
-    <Breadcrumb.Item
-      onClick={() => navigate(path)}
-    >
-      {label}
-    </Breadcrumb.Item>
+    <Breadcrumb.Item onClick={() => navigate(path)}>{label}</Breadcrumb.Item>
   );
 };
 
@@ -93,9 +98,7 @@ const BreadcrumbChild = ({ label, path, separated, disabled, variant: localVaria
   const variant = localVariant || contextVariant || "secondary";
 
   if (asText) {
-    return (
-      <Dropdown.ItemText className="fw-bold">{label}</Dropdown.ItemText>
-    )
+    return <Dropdown.ItemText className="fw-bold">{label}</Dropdown.ItemText>;
   }
 
   return (
@@ -136,7 +139,8 @@ const BreadcrumbTruncate = ({ label, children, useIcon }: BreadcrumbTruncateProp
       onClick={() => setShow((prev) => !prev)}
       style={{ cursor: "pointer", userSelect: "none" }}
     >
-      {label || <i className="bi bi-three-dots" />}{useIcon && <i className="bi bi-chevron-down ms-2" />}
+      {label || <i className="bi bi-three-dots" />}
+      {useIcon && <i className="bi bi-chevron-down ms-2" />}
       {show && (
         <Dropdown.Menu
           show
@@ -144,7 +148,8 @@ const BreadcrumbTruncate = ({ label, children, useIcon }: BreadcrumbTruncateProp
           style={{ top: "100%", left: 0, zIndex: 1000 }}
         >
           {React.Children.map(children, (child, i) => {
-            if (!React.isValidElement<{ separated?: boolean }>(child)) return null;
+            if (!React.isValidElement<{ separated?: boolean }>(child))
+              return null;
             const separated = child.props.separated;
             const total = React.Children.count(children);
             const isLast = i === total - 1;
@@ -163,9 +168,8 @@ const BreadcrumbTruncate = ({ label, children, useIcon }: BreadcrumbTruncateProp
   );
 };
 
-export const BreadcrumbPlus = {
-  Provider: BreadcrumbProvider,
+export const BreadcrumbPlus: BreadcrumbPlusComponent = Object.assign(BreadcrumbComponent, {
   Item: BreadcrumbItem,
   Truncate: BreadcrumbTruncate,
   Child: BreadcrumbChild,
-};
+});
