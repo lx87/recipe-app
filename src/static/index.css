@@ -23,36 +23,45 @@
   height: 100vh;
 }
 
-body{
+body {
   background-color: rgb(54, 56, 70);
 }
 
-.home{
+.home {
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.list{
+.list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto;
   gap: 2rem;
 }
 
-.footer-main{
+.footer-main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
 }
 
-.footer-main p{
+.footer-main p {
   margin: 0;
 }
 
-.footer-main p:first-child{
+.footer-main p:first-child {
   justify-self: start;
 }
 
-.footer-main a{
+.footer-main a {
   justify-self: end;
+}
+
+.grid-container {
+  height: max-content;
+  width: 100%;
+  display: grid;
+  gap: 16px;
+  padding: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
 }

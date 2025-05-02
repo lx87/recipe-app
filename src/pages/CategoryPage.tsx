@@ -25,7 +25,7 @@ const CategoryPage = () => {
         : meals;
 
     return (
-        <div className="container-fluid">
+        <div className="p-0 container-fluid d-flex flex-column py-5">
             <BreadcrumbPlus>
                 <BreadcrumbPlus.Item label="Home" path="/" />
                 <BreadcrumbPlus.Item label="Category" />

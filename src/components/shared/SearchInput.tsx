@@ -7,7 +7,7 @@ interface SearchInputProps {
 
 const SearchInput = ({ onSearch, placeholder = "Search..." }: SearchInputProps) => {
     return (
-        <InputGroup className="w-50 mb-3">
+        <InputGroup className="w-50 ms-4 mb-3">
             <Form.Control
                 aria-label="Search category input"
                 placeholder={placeholder}

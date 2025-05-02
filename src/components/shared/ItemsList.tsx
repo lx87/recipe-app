@@ -26,7 +26,7 @@ const ItemsList = ({ items, filter }: ItemsListProps) => {
         : items;
 
     return (
-        <div className="container-fluid p-0 m-0 list d-flex flex-wrap gap-3 justify-content-start">
+        <div className="grid-container">
             {itemsToShow.map((item) => (
                 <CardItem
                     key={item.id}
