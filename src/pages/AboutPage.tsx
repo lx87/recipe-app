@@ -24,7 +24,11 @@ function AboutPage() {
             <MenuBar>
                 <MenuBar.Item label="File" />
                 <MenuBar.Item label="Edit" />
-                <MenuBar.Item label="View" />
+                <MenuBar.Dropdown label="View">
+                    <MenuBar.DropDownItem label="Edit" />
+                    <MenuBar.DropDownItem label="separated" separated />
+                    <MenuBar.DropDownItem label="Disabled" disabled />
+                </MenuBar.Dropdown>
                 <MenuBar.Item label="Profiles" />
             </MenuBar>
         </div>

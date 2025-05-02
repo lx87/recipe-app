@@ -31,7 +31,7 @@ type BreadcrumbChildProps = | {
   asText: true;
   separated?: boolean;
   disabled?: boolean;
-  variant?: Variant;
+  variant?: never;
   path?: never;
 } | {
   label: string;
