@@ -22,14 +22,17 @@ function AboutPage() {
             </BreadcrumbPlus>
             <h1>AboutPage</h1>
             <MenuBar>
-                <MenuBar.Item label="File" />
-                <MenuBar.Item label="Edit" />
+                <MenuBar.Trigger label="File" />
+                <MenuBar.Trigger label="Edit" />
                 <MenuBar.Dropdown label="View">
-                    <MenuBar.DropDownItem label="Edit" />
-                    <MenuBar.DropDownItem label="separated" separated />
-                    <MenuBar.DropDownItem label="Disabled" disabled />
+                    <MenuBar.Dropdown.Trigger label="Edit" />
+                    <MenuBar.Dropdown.Separator />
+                    <MenuBar.Dropdown.Trigger label="separated" />
+                    <MenuBar.Dropdown.Separator />
+                    <MenuBar.Dropdown.Trigger label="Disabled" disabled />
+                    <MenuBar.Dropdown.Trigger label="with kbd" shortcut="⌘R" />
                 </MenuBar.Dropdown>
-                <MenuBar.Item label="Profiles" />
+                <MenuBar.Trigger label="Profiles" />
             </MenuBar>
         </div>
     );

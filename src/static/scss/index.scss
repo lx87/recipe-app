@@ -58,10 +58,8 @@ body {
 }
 
 .grid-container {
-  height: max-content;
-  width: 100%;
   display: grid;
+  width: max-content;
+  grid-template-columns: repeat(6, max-content);
   gap: 16px;
-  padding: 32px;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
 }

@@ -23,7 +23,7 @@ function Home() {
     }));
 
     return (
-        <div className="p-0 container-fluid d-flex flex-column py-5">
+        <div className="p-0 container-fluid d-flex flex-column py-5 align-items-center gap-3">
             <SearchInput
                 onSearch={(value) => { setSearch(value) }}
                 placeholder="Search by category"
