@@ -23,7 +23,7 @@ const CategoryPage = () => {
     return (
         <>
             <div className="w-100 d-flex p-2 justify-content-between align-content-center bg-body-tertiary z-3">
-                <BreadcrumbPlus>
+                <BreadcrumbPlus className="mt-2 ps-2">
                     <BreadcrumbPlus.Item path="/">Home</BreadcrumbPlus.Item>
                     <BreadcrumbPlus.Item>Category</BreadcrumbPlus.Item>
                     <BreadcrumbPlus.Item>{`${name || "Unkown-category"}`}</BreadcrumbPlus.Item>
