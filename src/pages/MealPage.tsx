@@ -36,17 +36,15 @@ const MealPage = () => {
 
     return (
         <>
-            <div className="container-fluid d-flex flex-column pt-3">
+            <div className="container-fluid d-flex flex-column align-items-start text-start pt-3">
                 <BreadcrumbPlus>
                     <BreadcrumbPlus.Item path="/">Home</BreadcrumbPlus.Item>
                     <BreadcrumbPlus.Item>Category</BreadcrumbPlus.Item>
                     <BreadcrumbPlus.Item>{`${meal.strCategory || "Unkown-category"}`}</BreadcrumbPlus.Item>
                 </BreadcrumbPlus>
-            </div>
-            <div className="container-fluid d-flex flex-column align-items-start text-start py-5">
                 <div className=" d-flex justify-content-between">
                     <div>
-                        <Card style={{ width: '35rem' }}>
+                        <Card style={{ width: '25vw' }}>
                             <Card.Img variant="top" src={meal.strMealThumb} alt={meal.strMeal} className=" w-100" />
                             <Card.Body>
                                 <ListGroup className="list-group-flush">
@@ -60,6 +58,8 @@ const MealPage = () => {
                     <div className="ps-5">
                         <h1>Instructions:</h1>
                         <p>{meal.strInstructions}</p>
+                        <h3 className="mt-3">Video:</h3>
+                        <iframe src={`https://www.youtube.com/embed/${meal.strYoutube.split("v=")[1]}`} className="iframe"></iframe>
                     </div>
                 </div>
             </div >

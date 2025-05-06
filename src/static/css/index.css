@@ -70,3 +70,12 @@ body {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.custom-shadow {
+  text-shadow: 5px 9px 7px rgba(0, 0, 0, 0.78);
+}
+
+.iframe {
+  width: 40vw;
+  aspect-ratio: 16/9;
+}

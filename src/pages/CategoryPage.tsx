@@ -32,7 +32,7 @@ const CategoryPage = () => {
             </div>
             <div className="container-fluid d-flex flex-column overflow-auto">
                 <div className="d-flex align-items-center justify-content-center ayam-percik py-5">
-                    <h1 className="text-capitalize align-self-center display-1 fw-medium shadow py-5">{name}</h1>
+                    <h1 className="text-capitalize align-self-center display-1 fw-medium custom-shadow py-5">{name}</h1>
                 </div>
                 <div className="p-0 container-fluid d-flex flex-column py-3 align-items-center gap-3">
                     <ItemsList
