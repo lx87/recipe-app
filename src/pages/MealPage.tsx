@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../core/queryManager";
 import Preloader from "../components/Preloader";
-import BreadcrumbProvider from "../components/BreadcrumbProvider"
+import { BreadcrumbPlus } from "../components/vistUI/BreadcrumbPlus";
 import { Meal } from "../types/mealTypes";
+import Card from "react-bootstrap/Card";
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const MealPage = () => {
     const { id } = useParams<{ id: string }>();
     const [meal, setMeal] = useState<Meal | null>(null);
     const [error, setError] = useState<boolean>(false);
-    const mealName = id
+    const mealName = id;
 
     useEffect(() => {
         if (mealName) {
@@ -23,42 +25,45 @@ const MealPage = () => {
                 })
                 .catch((error) => {
                     console.error("Ошибка при загрузке данных:", error);
-                    setError(error)
+                    setError(error);
                     setMeal(null);
                 });
         }
     }, [mealName]);
 
-
-    if (error) return <h1>{error}</h1>
+    if (error) return <h1>{error}</h1>;
     if (!meal) return <Preloader />;
 
     return (
-        <div className="container-fluid d-flex flex-column align-items-start text-start">
-            <BreadcrumbProvider
-                items={[
-                    { label: "Home", path: "/" },
-                    { label: meal.strCategory, path: `/category/${meal.strCategory}` },
-                    { label: "Recipe" }
-                ]}
-            />
-            <h1>{meal.strMeal}</h1>
-            {meal.strMealThumb && (
-                <img
-                    src={meal.strMealThumb}
-                    alt={meal.strMeal}
-                    className="img-fluid mb-3"
-                />
-            )}
-            <p>
-                <strong>Category:</strong> {meal.strCategory}
-            </p>
-            <p>
-                <strong>Cuisine:</strong> {meal.strArea}
-            </p>
-            <h3>Instructions:</h3>
-            <p>{meal.strInstructions}</p>
-        </div>
+        <>
+            <div className="container-fluid d-flex flex-column pt-3">
+                <BreadcrumbPlus>
+                    <BreadcrumbPlus.Item path="/">Home</BreadcrumbPlus.Item>
+                    <BreadcrumbPlus.Item>Category</BreadcrumbPlus.Item>
+                    <BreadcrumbPlus.Item>{`${meal.strCategory || "Unkown-category"}`}</BreadcrumbPlus.Item>
+                </BreadcrumbPlus>
+            </div>
+            <div className="container-fluid d-flex flex-column align-items-start text-start py-5">
+                <div className=" d-flex justify-content-between">
+                    <div>
+                        <Card style={{ width: '35rem' }}>
+                            <Card.Img variant="top" src={meal.strMealThumb} alt={meal.strMeal} className=" w-100" />
+                            <Card.Body>
+                                <ListGroup className="list-group-flush">
+                                    <ListGroup.Item><h1 className="pb-3">{meal.strMeal}</h1></ListGroup.Item>
+                                    <ListGroup.Item><strong>Category:</strong> {meal.strCategory}</ListGroup.Item>
+                                    <ListGroup.Item><strong>Cuisine:</strong> {meal.strArea}</ListGroup.Item>
+                                </ListGroup>
+                            </Card.Body>
+                        </Card>
+                    </div>
+                    <div className="ps-5">
+                        <h1>Instructions:</h1>
+                        <p>{meal.strInstructions}</p>
+                    </div>
+                </div>
+            </div >
+        </>
     );
 };
 

@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { fetchData } from '../core/queryManager';
-import ItemsList from '../components/shared/ItemsList';
-import SearchInput from '../components/shared/SearchInput';
-import { Category } from '../types/mealTypes';
+import { useEffect, useState } from "react";
+import { fetchData } from "../core/queryManager";
+import ItemsList from "../components/shared/ItemsList";
+import SearchInput from "../components/shared/SearchInput";
+import { Category } from "../types/mealTypes";
 
 function Home() {
     const [categories, setCategories] = useState<Category[]>([]);
@@ -23,15 +23,15 @@ function Home() {
     }));
 
     return (
-        <div className="p-0 container-fluid d-flex flex-column align-items-center py-5">
+        <div className="container-fluid d-flex flex-column overflow-auto pt-3">
             <SearchInput
-                onSearch={(value) => { setSearch(value) }}
-                placeholder="Search by category"
-            />
-            <ItemsList
-                items={items}
-                filter={search}
-            />
+                onSearch={(value) => { setSearch(value); }}
+                placeholder="Search by category" />
+            <div className="p-0 container-fluid d-flex flex-column py-3 align-items-center gap-3">
+                <ItemsList
+                    items={items}
+                    filter={search} />
+            </div>
         </div>
     );
 }

@@ -20,14 +20,15 @@ const CardItem = ({ item, linkPath }: CardItemProps) => {
     };
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card>
             <Card.Img variant="top" className="p-3 rounded-3" src={item.image} />
             <hr className="m-0" />
             <Card.Body>
                 <Card.Title>{item.title.slice(0, 24)}</Card.Title>
                 {item.description ? (
                     <Card.Text>
-                        {item.description.slice(0, 60)}
+                        {item.description.slice(0, 50)}
+                        {"..."}
                     </Card.Text>
                 ) : <Card.Text>{"#"}{item.id}</Card.Text>}
             </Card.Body>

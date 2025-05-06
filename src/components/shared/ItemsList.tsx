@@ -26,15 +26,19 @@ const ItemsList = ({ items, filter }: ItemsListProps) => {
         : items;
 
     return (
-        <div className="container-fluid p-0 m-0 list d-flex flex-wrap gap-3 justify-content-center">
-            {itemsToShow.map((item) => (
-                <CardItem
-                    key={item.id}
-                    item={item}
-                    linkPath={item.linkPath}
-                />
-            ))}
-            {itemsToShow.length === 0 && <p>No meals found</p>}
+        <div className="row gap-5">
+            <div className="row">
+                {itemsToShow.map((item) => (
+                    <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <CardItem
+                            key={item.id}
+                            item={item}
+                            linkPath={item.linkPath}
+                        />
+                    </div>
+                ))}
+                {itemsToShow.length === 0 && <p>No meals found</p>}
+            </div>
         </div>
     );
 };
