@@ -12,8 +12,7 @@ import NoMatch from "./pages/NoMatch";
 
 function App() {
   return (
-    // <Router basename="/recipe-app"> Раскоментировать при деплое
-    <Router>
+    <Router basename="/recipe-app">
       <Header />
       <Routes>
         <Route path="*" element={<NoMatch />} />
