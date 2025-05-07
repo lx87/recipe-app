@@ -44,7 +44,7 @@ const MealPage = () => {
                 </BreadcrumbPlus>
                 <div className=" d-flex justify-content-between">
                     <div>
-                        <Card style={{ width: '25vw' }}>
+                        <Card style={{ width: '30vw' }}>
                             <Card.Img variant="top" src={meal.strMealThumb} alt={meal.strMeal} className=" w-100" />
                             <Card.Body>
                                 <ListGroup className="list-group-flush">
